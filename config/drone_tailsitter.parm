@@ -58,3 +58,30 @@ Q_A_RAT_YAW_I    0.020000
 Q_A_RAT_YAW_IMAX 0.100000
 Q_A_RAT_YAW_P    0.100000
 Q_TRANS_DECEL    8
+
+; --------------------------------------------------------------------------- ;
+; High-speed "rocket dash" limits (tilt-and-move / Auto Goto).
+;
+; The dash runs in QHOVER with a directly-commanded lean, because QLOITER
+; always takes min(Q_LOIT_ANG_MAX, alt-hold lean limiter) and the alt-hold
+; limiter is a compile-time constant (acos(throttle/(0.8*Tmax)) ~46 deg), so
+; QLOITER can never lean past ~46 deg.  QHOVER has no such limiter - it uses
+; Q_A_ANGLE_MAX directly - so the caps below are what actually matter.
+; --------------------------------------------------------------------------- ;
+; Lean cap for the dash (attitude controller, range 10-80).  70 deg leaves the
+; ~46 deg QLOITER/approach limit untouched while allowing a true nose-forward
+; attitude at speed.
+Q_A_ANGLE_MAX    70
+; Bit 14: "ignore forward flight angle limits in Q modes and use Q_A_ANGLE_MAX
+; exclusively".  Without it QHOVER/QSTABILIZE pitch is clipped by
+; PTCH_LIM_MAX_DEG (30 deg in the frame defaults) and roll by ROLL_LIMIT_DEG.
+Q_OPTIONS        16384
+; QLOITER caps (approach / arrival / hold only; the dash itself is QHOVER).
+; ANG_MAX range is 0-45, 45 is its hard maximum.
+Q_LOIT_ANG_MAX   45
+Q_LOIT_ACC_MAX_M 5.0
+Q_LOIT_BRK_ACC_M 2.5
+; Default dash speed.  The companion overrides this per flight (m/s); the
+; value above the documented 0.2-35 range is accepted because it is a float
+; parameter and the EKF control ground speed limit is 400 m/s.
+Q_LOIT_SPEED_MS  40

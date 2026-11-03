@@ -128,6 +128,17 @@ target_link_libraries(CameraZoomPlugin PRIVATE
   gz-sim${GZ_SIM_VER}::gz-sim${GZ_SIM_VER}
 )
 
+add_library(RocketDrag
+  SHARED
+  src/RocketDrag.cc
+)
+target_include_directories(RocketDrag PRIVATE
+  include
+)
+target_link_libraries(RocketDrag PRIVATE
+  gz-sim${GZ_SIM_VER}::gz-sim${GZ_SIM_VER}
+)
+
 add_library(GstCameraPlugin
   SHARED
   src/GstCameraPlugin.cc
@@ -148,7 +159,7 @@ target_link_libraries(GstCameraPlugin PRIVATE
 # --------------------------------------------------------------------------- #
 # Compiler warnings.
 
-foreach(target ArduPilotPlugin ParachutePlugin CameraZoomPlugin GstCameraPlugin)
+foreach(target ArduPilotPlugin ParachutePlugin CameraZoomPlugin GstCameraPlugin RocketDrag)
   if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     target_compile_options(${target} PRIVATE -Wall -Wextra)
   endif()
@@ -166,6 +177,7 @@ install(
   ParachutePlugin
   CameraZoomPlugin
   GstCameraPlugin
+  RocketDrag
   DESTINATION lib/${PROJECT_NAME}
 )
 
