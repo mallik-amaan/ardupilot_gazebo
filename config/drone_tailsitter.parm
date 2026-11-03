@@ -1,7 +1,15 @@
 Q_ENABLE         1
 Q_FRAME_CLASS    1
 Q_FRAME_TYPE     1
-Q_TAILSIT_MOTMX  15
+; Tailsitter DISABLED (this vehicle is a multicopter, not a tailsitter).
+; Q_TAILSIT_ENABLE 0 is required so Tailsitter::setup()'s "old heuristic"
+; (auto-set ENABLE=1 whenever MOTMX != 0) cannot fire — an explicit 0 still
+; counts as "configured". MOTMX=0 also blocks that heuristic independently.
+; With ENABLE=0, quadplane.cpp:726 creates ahrs_view with ROTATION_NONE, so Q
+; modes no longer publish/steer on the ROTATION_PITCH_90 tailsitter view (the
+; 180/90 "phantom"). Q_FRAME_CLASS/TYPE and the SERVO->motor map are unchanged.
+Q_TAILSIT_ENABLE 0
+Q_TAILSIT_MOTMX  0
 ; QuadPlane Q motors -> 4 rotor outputs (Motor1-4 = 33-36) so QHOVER mixer drives them
 SERVO1_FUNCTION  33
 SERVO2_FUNCTION  34
