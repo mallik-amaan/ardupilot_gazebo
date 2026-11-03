@@ -10,6 +10,20 @@ Q_FRAME_TYPE     1
 ; 180/90 "phantom"). Q_FRAME_CLASS/TYPE and the SERVO->motor map are unchanged.
 Q_TAILSIT_ENABLE 0
 Q_TAILSIT_MOTMX  0
+; Q_ASSIST_SPEED must be non-zero to pass the pre-arm gate that is only
+; skipped while a tailsitter is enabled (AP_Arming_Plane.cpp:209). This
+; vehicle is VTOL-only (no wings, never enters forward flight), so -1
+; explicitly disables all Q_ASSIST features except transitions - which we
+; never reach - instead of leaving the default 0 (which fails arming).
+Q_ASSIST_SPEED   -1
+; The frame defaults (quadplane-copter_tailsitter.parm) enable a SIM
+; rangefinder (RNGFND1_TYPE 100) + RNGFND_LANDING, but this model has no
+; range sensor, so the plugin never sends rng_0 and arming fails with
+; "PreArm: Rangefinder 1: No Data" (Type::SIM -> AP_RangeFinder_SITL reads
+; sitl->get_rangefinder()). Disable it to pass the pre-arm gate; a real
+; range sensor (model <sensor type=ray> + plugin <sensor><topic>) is the
+; follow-up for precision landing.
+RNGFND1_TYPE     0
 ; QuadPlane Q motors -> 4 rotor outputs (Motor1-4 = 33-36) so QHOVER mixer drives them
 SERVO1_FUNCTION  33
 SERVO2_FUNCTION  34
