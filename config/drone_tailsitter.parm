@@ -54,9 +54,14 @@ Q_A_RAT_RLL_IMAX 0.300000
 Q_A_RAT_RLL_P    0.400000
 Q_A_RAT_YAW_D    0.000000
 Q_A_RAT_YAW_FF   0.000000
-Q_A_RAT_YAW_I    0.020000
-Q_A_RAT_YAW_IMAX 0.100000
-Q_A_RAT_YAW_P    0.100000
+Q_A_RAT_YAW_I    0.100000
+Q_A_RAT_YAW_IMAX 0.400000
+; Yaw authority. The frame defaults (P=0.10, I=0.02, IMAX=0.10) cannot reject
+; the yaw disturbance produced while leaning hard for the rocket dash - the
+; heading wandered at ~35 deg/s and a rotating heading rotates the lean
+; direction, which turns the dash into an orbit. Verified live: level flight
+; drifts only 0.4 deg/s, so the disturbance is lean-induced.
+Q_A_RAT_YAW_P    0.350000
 Q_TRANS_DECEL    8
 
 ; --------------------------------------------------------------------------- ;
