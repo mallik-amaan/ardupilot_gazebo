@@ -90,9 +90,8 @@ Q_LOIT_BRK_ACC_M 2.5
 ; value above the documented 0.2-35 range is accepted because it is a float
 ; parameter and the EKF control ground speed limit is 400 m/s.
 Q_LOIT_SPEED_MS  40
-; Rotor thrust in the model is scaled x1.75 (area 0.002 -> 0.0035, see
-; model.sdf) so the dash can hold the 60-70 deg lean that 50 m/s needs. That
-; moves the hover point down the throttle: 0.35 / 1.75 = 0.20. Without this
-; mid stick (QHOVER's "zero climb") would be ~1.75x hover and the vehicle
-; would climb away as soon as it left QLOITER.
-Q_M_THST_HOVER   0.20
+; Rotor thrust is left at the airframe's design value (area 0.002), so the
+; hover trim stays at the motors default 0.35. (Scaling the rotors x1.75/x2.5
+; raised the achievable tilt but the vehicle sank above ~45-50 deg and the
+; dash top speed barely moved - see model.sdf / DRONE_TAILSITTER.md.)
+Q_M_THST_HOVER   0.35
