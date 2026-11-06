@@ -95,3 +95,10 @@ Q_LOIT_SPEED_MS  40
 ; raised the achievable tilt but the vehicle sank above ~45-50 deg and the
 ; dash top speed barely moved - see model.sdf / DRONE_TAILSITTER.md.)
 Q_M_THST_HOVER   0.35
+; QACRO (body-rate) mode, used for the rocket dash: the sticks are rates, so
+; the 80 deg multicopter lean limit and the Euler attitude singularity do not
+; apply. The companion closes the attitude loop and uses the pitch rate as its
+; main control authority, hence the raised pitch rate.
+Q_ACRO_RLL_RATE  360
+Q_ACRO_PIT_RATE  220
+Q_ACRO_YAW_RATE  90
